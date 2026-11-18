@@ -89,13 +89,21 @@ export function initUI(data: Catalog, page: string): UIApi {
  lines.push(`• Lieu de remise${S.mode==="rent"?" ou de livraison":""} : ${lieu||"à convenir"}`);
  if($("deco").value)lines.push(`• Décoration : ${$("deco").value}`);if(pc)lines.push(`• Code parrain : ${pc}`);
  lines.push("",`Pouvez-vous me confirmer la disponibilité et les prochaines étapes ? Merci d’avance, ${who}.`);
- LAST_MSG=lines.join("\n");$("go").href=wa(LAST_MSG);persist();renderPromos();renderMore();
+ const buildEn=()=>{const hr=new Date().getHours()<18?"Hello":"Good evening",w=cn||"a customer",l=[`${hr} Yamoo Drive team 👋`,"",`My name is ${w} and I would like to ${S.mode==="buy"?"buy":"rent"} this vehicle: ${c.n}.`];
+ if(other)l.push(`This will be a gift for ${name||"a loved one"} 🎁${msg?`, with this message: “${msg}”`:""}.`);
+ const dd=`${S.days} day${S.days>1?"s":""}`;
+ l.push("","Here is my summary:",`• Vehicle: ${c.n}`,`• Price: ${p.f}${S.mode==="rent"?` for ${dd}`:""}${getCurrency()!=="XAF"?` (≈ ${p.v})`:""}`);
+ if(S.mode==="rent"){l.push(`• Duration: ${dd}, starting ${dt?dt.split("-").reverse().join("/"):"on a date to be agreed"}`);if($("stime").value)l.push(`• Vehicle pickup time: ${$("stime").value}`);if($("etime").value)l.push(`• Return time: ${$("etime").value}`);l.push(CH()?`• Driver: ${DRV[S.drv].n} (${DRV[S.drv].y} years of experience)`:"• Without driver")}
+ l.push(`• ${S.mode==="rent"?"Handover or delivery place":"Handover place"}: ${lieu||"to be agreed"}`);
+ if($("deco").value)l.push(`• Decoration: ${tr($("deco").value)||$("deco").value}`);if(pc)l.push(`• Referral code: ${pc}`);
+ l.push("",`Could you confirm availability and the next steps? Thank you in advance, ${w}.`);return l.join("\n")};
+ LAST_MSG=getLang()==="en"?buildEn():lines.join("\n");$("go").href=wa(LAST_MSG);persist();renderPromos();renderMore();
  }
  function renderMore(){
  document.querySelectorAll("[data-chauf]").forEach(b=>b.setAttribute("aria-pressed",(b.dataset.chauf==="yes")===S.chauf));
  $("drvBox").hidden=!S.chauf;
  $("drvPick").innerHTML=DRV.map((d,k)=>`<button class="drv" data-drv="${k}" aria-pressed="${k===S.drv}"><span class="av">${d.n[0]}</span><span><b>${d.n}</b><br><small>${d.y} ans d’expérience · ★ ${d.r}</small></span></button>`).join("");
- $("drvList").innerHTML=DRV.map((d,k)=>`<article class="dcard"><div class="dh"><div class="av big">${d.n[0]}</div><div><h3>${d.n}</h3><p class="cap" style="margin:0">${d.y} ans d’expérience · ★ ${d.r} · ${d.l}</p></div></div><p>${d.d}</p><div class="dr">${d.rv.map(r=>`<div class="rev"><p>« ${r[1]} »</p><p class="cap">${r[0]} · ${"★".repeat(r[2])}</p></div>`).join("")}</div><div class="btns"><button class="cta" data-pick="${k}">Choisir ${d.n.split(" ")[0]}</button><a class="ghost" target="_blank" rel="noopener" href="${wa(`Bonjour Yamoo Drive, je souhaite donner mon avis sur le chauffeur ${d.n}.`)}">Donner mon avis</a></div></article>`).join("");
+ $("drvList").innerHTML=DRV.map((d,k)=>`<article class="dcard"><div class="dh"><div class="av big">${d.n[0]}</div><div><h3>${d.n}</h3><p class="cap" style="margin:0">${d.y} ans d’expérience · ★ ${d.r} · ${d.l}</p></div></div><p>${d.d}</p><div class="dr">${d.rv.map(r=>`<div class="rev"><p>« ${r[1]} »</p><p class="cap">${r[0]} · ${"★".repeat(r[2])}</p></div>`).join("")}</div><div class="btns"><button class="cta" data-pick="${k}">Choisir ${d.n.split(" ")[0]}</button><a class="ghost" target="_blank" rel="noopener" href="${wa(L(`Bonjour Yamoo Drive, je souhaite donner mon avis sur le chauffeur ${d.n}.`,`Hello Yamoo Drive, I would like to leave a review about the driver ${d.n}.`))}">Donner mon avis</a></div></article>`).join("");
  $("bOut").textContent=fmt(S.budget)+" / jour";
  const ok=CARS.map((c,i)=>[c,i]).filter(([c])=>c.rent<=S.budget);
  $("bRes").innerHTML=ok.length?`Avec ce budget, vous pouvez louer : ${ok.map(([c,i])=>`<a href="/vehicule?id=${i}">${c.n}</a>`).join(", ")}.`:"Aucun véhicule à ce budget. Augmentez-le un peu.";
@@ -109,21 +117,21 @@ export function initUI(data: Catalog, page: string): UIApi {
  const A=CARS[S.cA],B=CARS[S.cB],a1=SPEC[S.cA],b1=SPEC[S.cB],lo=(x,y)=>x<y?[`<b>${fmt(x)}</b>`,fmt(y)]:x>y?[fmt(x),`<b>${fmt(y)}</b>`]:[fmt(x),fmt(y)],pb=lo(A.buy,B.buy),pr=lo(A.rent,B.rent);
  $("cmpT").innerHTML=`<table class="tbl"><tr><th></th><td>${thumb(S.cA)}<b>${A.n}</b></td><td>${thumb(S.cB)}<b>${B.n}</b></td></tr><tr><th>Places</th><td>${a1.p}</td><td>${b1.p}</td></tr><tr><th>Boîte</th><td>${a1.b}</td><td>${b1.b}</td></tr><tr><th>Énergie</th><td>${a1.t}</td><td>${b1.t}</td></tr><tr><th>Coffre</th><td>${a1.k}</td><td>${b1.k}</td></tr><tr><th>Achat</th><td>${pb[0]}</td><td>${pb[1]}</td></tr><tr><th>Par jour</th><td>${pr[0]}</td><td>${pr[1]}</td></tr></table>`;
  const nm=esc($("name").value.trim()||"toi"),ms=esc($("msg").value.trim()||"Une surprise t’attend. Profite de la route !"),cr=CARS[S.car];
- $("letter").innerHTML=`<span class="tag">Cadeau Yamoo</span><div class="to">Pour ${nm}</div>${thumb(S.car)}<div class="msg">« ${ms} »</div><p>${cr.n} · ${S.mode==="buy"?"à acheter":"à louer"}</p><a class="cta wa" target="_blank" rel="noopener" href="${wa(`Bonjour Yamoo Drive, c’est ${$("name").value.trim()||"le bénéficiaire"}. J’ai reçu un cadeau de la part de ${$("cname").value.trim()||"un proche"} : ${cr.n}. Je souhaite choisir ma date de remise.`)}">Choisir ma date de remise</a>`;
- $("giftSend").href=shareLink(`Surprise ${$("name").value.trim()||""} ! Un véhicule t’attend chez Yamoo Drive : ${cr.n}. ${$("msg").value.trim()} ${site()}`);
+ $("letter").innerHTML=`<span class="tag">Cadeau Yamoo</span><div class="to">Pour ${nm}</div>${thumb(S.car)}<div class="msg">« ${ms} »</div><p>${cr.n} · ${S.mode==="buy"?"à acheter":"à louer"}</p><a class="cta wa" target="_blank" rel="noopener" href="${wa(L(`Bonjour Yamoo Drive, c’est ${$("name").value.trim()||"le bénéficiaire"}. J’ai reçu un cadeau de la part de ${$("cname").value.trim()||"un proche"} : ${cr.n}. Je souhaite choisir ma date de remise.`,`Hello Yamoo Drive, this is ${$("name").value.trim()||"the recipient"}. I received a gift from ${$("cname").value.trim()||"a loved one"}: ${cr.n}. I would like to choose my handover date.`))}">Choisir ma date de remise</a>`;
+ $("giftSend").href=shareLink(L(`Surprise ${$("name").value.trim()||""} ! Un véhicule t’attend chez Yamoo Drive : ${cr.n}. ${$("msg").value.trim()} ${site()}`,`Surprise ${$("name").value.trim()||""}! A vehicle is waiting for you at Yamoo Drive: ${cr.n}. ${$("msg").value.trim()} ${site()}`));
  $("revs").innerHTML=REV.map(r=>`<div class="rev"><div class="av">${r[0][0]}</div><p>${r[1]}</p><p class="cap">${r[0]}</p></div>`).join("");
  let pn=$("pname").value.trim().toUpperCase().replace(/[^A-Z]/g,"").slice(0,5),h=0;for(const k of pn)h=(h*31+k.charCodeAt(0))%90;
  const code=pn?`YAMOO-${pn}${10+h}`:"";
  $("pcodeOut").textContent=code||"Votre code apparaîtra ici";
- $("pShare").href=code?shareLink(`Utilise mon code ${code} chez Yamoo Drive et profite d’une réduction sur ta première location ! ${site()}`):"/parrainage";
+ $("pShare").href=code?shareLink(L(`Utilise mon code ${code} chez Yamoo Drive et profite d’une réduction sur ta première location ! ${site()}`,`Use my code ${code} at Yamoo Drive and get a discount on your first rental! ${site()}`)):"/parrainage";
  }
  const openEnv=()=>{const e=$("envBtn");e.classList.add("open");setTimeout(()=>{e.hidden=true;$("letter").hidden=false},550)};
  const resetEnv=()=>{$("envBtn").hidden=false;$("envBtn").classList.remove("open");$("letter").hidden=true};
- function countUp(){document.querySelectorAll("[data-n]").forEach(e=>{const to=+e.dataset.n,f=v=>e.dataset.d?(v/10).toFixed(1).replace(".",","):Math.round(v);
+ function countUp(){document.querySelectorAll("[data-n]").forEach(e=>{const to=+e.dataset.n,f=v=>e.dataset.d?(v/10).toFixed(1).replace(".",L(",",".")):Math.round(v);
  if(matchMedia("(prefers-reduced-motion:reduce)").matches){e.textContent=f(to);return}const t0=performance.now(),st=n=>{const k=Math.min((n-t0)/1200,1);e.textContent=f(to*k);if(k<1)requestAnimationFrame(st)};requestAnimationFrame(st)})}
  function renderPromos(){
  const pr=(i,p)=>{const c=CARS[i],b=S.mode==="buy"?c.buy:c.rent;return {o:fmt(b)+(S.mode==="buy"?"":" / jour"),n:fmt(Math.round(b*(1-p/100)/1000)*1000)+(S.mode==="buy"?"":" / jour"),nf:fmtF(Math.round(b*(1-p/100)/1000)*1000)+(S.mode==="buy"?"":" / jour")}};
- $("gridPromo").innerHTML=PROMOS.map(m=>{const c=CARS[m.c],x=pr(m.c,m.pct),txt=`Bonjour Yamoo Drive, je profite de l’offre -${m.pct}% sur : ${c.n} (${S.mode==="buy"?"achat":"location"}). Prix promo : ${x.nf}.`;
+ $("gridPromo").innerHTML=PROMOS.map(m=>{const c=CARS[m.c],x=pr(m.c,m.pct),txt=L(`Bonjour Yamoo Drive, je profite de l’offre -${m.pct}% sur : ${c.n} (${S.mode==="buy"?"achat":"location"}). Prix promo : ${x.nf}.`,`Hello Yamoo Drive, I would like to take the -${m.pct}% offer on: ${c.n} (${S.mode==="buy"?"purchase":"rental"}). Promo price: ${x.nf}.`);
   return `<div class="promo"><span class="badge">-${m.pct}%</span>${thumb(m.c)}<h3>${c.n}</h3><span style="color:var(--mute);font-size:14px">${m.t}</span><div><span class="old">${x.o}</span><span class="new">${x.n}</span></div><div class="cd" data-end="${m.end}"></div><div class="btns"><a class="cta wa" target="_blank" rel="noopener" href="${wa(txt)}">Profiter de l’offre</a><a class="ghost" href="/vehicule?id=${m.c}">Voir</a></div></div>`}).join("");
  $("ann").innerHTML=ANN.map(a=>`<div><span>${a[0]}</span><p>${a[1]}</p></div>`).join("");
  const f=PROMOS.reduce((a,b)=>b.pct>a.pct?b:a);
@@ -140,10 +148,10 @@ export function initUI(data: Catalog, page: string): UIApi {
  $("dNote").textContent=c.note;
  $("mainPh").innerHTML=real(i,S.photo);$("cap").textContent=c.ph[S.photo][3];
  $("thumbs").innerHTML=c.ph.map((p,k)=>`<button data-ph="${k}" aria-label="${p[3]}" aria-pressed="${k===S.photo}">${real(i,k)}</button>`).join("");
- $("dAsk").href=wa(`Bonjour Yamoo Drive, j’ai une question sur : ${c.n}.`);
+ $("dAsk").href=wa(L(`Bonjour Yamoo Drive, j’ai une question sur : ${c.n}.`,`Hello Yamoo Drive, I have a question about: ${c.n}.`));
  $("dFav").dataset.fav=i;$("dFav").textContent=FAV.has(i)?"♥ Dans mes favoris":"♡ Ajouter aux favoris";
- $("dShare").href=shareLink(`Que penses-tu de celui-ci : ${c.n} chez Yamoo Drive ? ${site()}/vehicule?id=${i}`);
- const t=new Date();t.setHours(0,0,0,0);const p2=v=>String(v).padStart(2,"0");let h="LMMJVSD".split("").map(d=>`<b>${d}</b>`).join("")+"<i></i>".repeat((t.getDay()+6)%7);
+ $("dShare").href=shareLink(L(`Que penses-tu de celui-ci : ${c.n} chez Yamoo Drive ? ${site()}/vehicule?id=${i}`,`What do you think of this one: ${c.n} at Yamoo Drive? ${site()}/vehicule?id=${i}`));
+ const t=new Date();t.setHours(0,0,0,0);const p2=v=>String(v).padStart(2,"0");let h=L("LMMJVSD","MTWTFSS").split("").map(d=>`<b>${d}</b>`).join("")+"<i></i>".repeat((t.getDay()+6)%7);
  for(let k=0;k<28;k++){const d=new Date(t);d.setDate(t.getDate()+k);const iso=`${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`,busy=(k*3+i*5)%7===0||(k+i)%11===0;h+=`<button data-day="${iso}" ${busy?"disabled":""} aria-pressed="${iso===S.date}" aria-label="${iso}${busy?" indisponible":""}">${d.getDate()}</button>`}
  $("cal").innerHTML=h;$("calCap").textContent=S.date?`Début choisi : ${S.date}. Touchez Réserver pour continuer.`:"Touchez un jour libre pour commencer la location. Les jours barrés sont pris (exemple).";
  }
@@ -189,6 +197,7 @@ export function initUI(data: Catalog, page: string): UIApi {
  const curSel=document.getElementById("cur");
  if(curSel){curSel.value=getCurrency();curSel.addEventListener("change",()=>{setCurrency(curSel.value);refreshStatic();render();if($("p-vehicule").classList.contains("on"))detail()})}
  refreshStatic();
+ document.getElementById("lang")?.addEventListener("change",()=>{refreshStatic();render();if($("p-vehicule").classList.contains("on"))detail()});
  function initSlider(){const t=$("trk"),n=CARS.length;t.innerHTML=CARS.map((c,i)=>`<a class="sl" href="/vehicule?id=${i}">${thumb(i)}<div class="slc"><b>${c.n}</b><span>${c.d}</span></div></a>`).join("");
  $("dots").innerHTML="<i></i>".repeat(n);const ds=$("dots").children;let k=0,hold=false;
  const mark=()=>{const w=t.children[1].offsetLeft-t.children[0].offsetLeft;k=Math.round(t.scrollLeft/w);[...ds].forEach((d,j)=>d.classList.toggle("on",j===k))};
