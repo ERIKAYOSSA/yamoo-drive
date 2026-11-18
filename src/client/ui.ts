@@ -4,6 +4,7 @@
 import {computeQuote} from "../shared/pricing.js";
 import type {Catalog, ReservationInput} from "../shared/types.js";
 import {formatIn, getCurrency, setCurrency} from "./currency.js";
+import {getLang, L, tr} from "./i18n.js";
 
 export interface UIApi {
   S: any;

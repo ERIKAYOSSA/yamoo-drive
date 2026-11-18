@@ -1,7 +1,10 @@
 import { loadCatalog } from "./api.js";
 import { initUI } from "./ui.js";
+import { initI18n } from "./i18n.js";
 
 const page = document.body.dataset.page ?? "accueil";
+
+initI18n();
 
 try {
   const catalog = await loadCatalog();
