@@ -1,5 +1,6 @@
 import { ApiError, contractUrl, createReservation } from "./api.js";
 import { el } from "./dom.js";
+import { L } from "./i18n.js";
 import type { UIApi } from "./ui.js";
 import type { ReservationInput } from "../shared/types.js";
 
@@ -71,7 +72,7 @@ export function initReserve(ui: UIApi): void {
       go,
       false,
       (id) => {
-        window.location.href = ui.wa(`${ui.getMessage()}\n\nRéférence : ${id}`);
+        window.location.href = ui.wa(`${ui.getMessage()}\n\n${L("Référence", "Reference")} : ${id}`);
       },
       () => {
         window.location.href = ui.wa(ui.getMessage());

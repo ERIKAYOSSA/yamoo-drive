@@ -129,14 +129,25 @@ header .lg,footer .lg,.logo .lg{background:none!important;border-radius:0!import
 @keyframes pulseStep{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--sun) 70%,transparent)}35%,100%{box-shadow:0 0 0 16px transparent}}
 @media (max-width:760px){.steps div::before,.steps div::after{display:none}}
 
-/* ===== Titre qui change : message principal puis offre de location ===== */
+/* ===== Titre qui change : un message à la fois, jamais l'un sur l'autre ===== */
 .rot{display:grid}
 .rot span{grid-area:1/1;-webkit-text-fill-color:var(--ink)}
-.rot .r1{animation:rot1 11s ease-in-out infinite}
-.rot .r2{opacity:0;animation:rot2 11s ease-in-out infinite}
-@keyframes rot1{0%,44%{opacity:1;transform:none}50%,94%{opacity:0;transform:translateY(-16px)}100%{opacity:1;transform:none}}
-@keyframes rot2{0%,44%{opacity:0;transform:translateY(16px)}50%,94%{opacity:1;transform:none}100%{opacity:0;transform:translateY(16px)}}
-@media (prefers-reduced-motion:reduce){.rot .r2{display:none}}
+.rot .r1{animation:rot1 12s linear infinite}
+.rot .r2{opacity:0;visibility:hidden;animation:rot2 12s linear infinite}
+/* Le 2e message n'apparaît qu'une fois le 1er totalement disparu (et inversement). */
+@keyframes rot1{
+  0%,42%{opacity:1;visibility:visible;transform:none}
+  46%,96%{opacity:0;visibility:hidden;transform:translateY(-14px)}
+  100%{opacity:1;visibility:visible;transform:none}
+}
+@keyframes rot2{
+  0%,50%{opacity:0;visibility:hidden;transform:translateY(14px)}
+  54%,90%{opacity:1;visibility:visible;transform:none}
+  94%,100%{opacity:0;visibility:hidden;transform:translateY(-14px)}
+}
+/* Animations désactivées sur le téléphone, ou navigateur ancien : on n'affiche que le 1er message. */
+@media (prefers-reduced-motion:reduce){.rot .r2{display:none}.rot .r1{animation:none}}
+@supports not (display:grid){.rot .r2{display:none}.rot .r1{animation:none}}
 
 /* ===== Mode clair : blanc immaculé (aucune teinte, aucun dégradé de fond) ===== */
 :root[data-theme="light"]{--bg:#fff;--surface:#fff;--line:#E7ECF6}
