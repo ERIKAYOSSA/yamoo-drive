@@ -1,6 +1,9 @@
 // Dictionnaire français → anglais. La clé est le texte français tel qu'il apparaît sur le site.
 // Pour corriger ou ajouter une traduction, modifiez simplement cette liste.
 export const EN: Record<string, string> = {
+  "Offres": "Offers",
+  "Menu": "Menu",
+  "Promotions et offres": "Promotions and offers",
   "Yamoo Drive accueil": "Yamoo Drive home",
   "Devise": "Currency",
   "Langue": "Language",

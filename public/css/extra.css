@@ -170,3 +170,62 @@ header .lg,footer .lg,.logo .lg{background:none!important;border-radius:0!import
 /* ===== Sélecteur de langue ===== */
 #lang{margin-left:auto;margin-right:8px}
 #cur{margin-left:0}
+
+/* ===== Barre de navigation compacte : rubriques regroupées en menus ===== */
+header{position:relative;z-index:40;gap:12px;padding:10px 18px;margin:12px 0 20px;border-radius:18px;flex-wrap:nowrap}
+header .lg{height:38px}
+.hdr-cta,.bg{display:none}
+.nx{display:none!important}
+.nw{order:0;width:auto;flex:1 1 auto;display:flex;align-items:center;gap:12px;position:relative}
+nav{order:0;width:auto;flex:1;display:flex;align-items:center;justify-content:center;gap:4px;overflow:visible;padding:0}
+nav>a,.ng>summary{white-space:nowrap;text-decoration:none;font-weight:600;font-size:14px;padding:8px 14px;border-radius:999px;color:var(--mute);cursor:pointer}
+.ng{position:relative}
+.ng>summary{list-style:none;display:flex;align-items:center;gap:7px;transition:background-color .25s,color .25s}
+.ng>summary::-webkit-details-marker{display:none}
+.ng>summary::after{content:"";width:6px;height:6px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s}
+.ng[open]>summary::after{transform:rotate(225deg) translateY(-2px)}
+.ng[open]>summary,.ng>summary:hover,nav>a:hover{background:color-mix(in srgb,var(--brand) 10%,transparent);color:var(--brand)}
+.ng.on>summary{background:linear-gradient(135deg,var(--deep),var(--deep2));color:var(--deep-ink)}
+nav a.nr{margin-left:6px}
+.gm{position:absolute;top:calc(100% + 8px);left:0;min-width:190px;display:flex;flex-direction:column;gap:2px;padding:8px;background:var(--bg);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 40px rgba(11,27,77,.16);z-index:50;animation:gmIn .18s ease-out}
+.gm a{padding:10px 14px;border-radius:12px;font-size:14px;font-weight:600;white-space:nowrap;text-decoration:none;color:var(--ink)}
+.gm a:hover{background:color-mix(in srgb,var(--brand) 10%,transparent);color:var(--brand)}
+.gm a[aria-current="page"]{color:var(--deep-ink)}
+.tools{display:flex;align-items:center;gap:8px;margin-left:auto}
+.tools #lang,.tools #cur{margin:0}
+@keyframes gmIn{from{opacity:0;transform:translateY(-6px)}}
+
+@media (max-width:899px){
+  header{flex-wrap:wrap;padding:8px 12px;margin:10px 0 14px;gap:8px}
+  header .lg{height:34px}
+  .hdr-cta{display:inline-flex;align-items:center;margin-left:auto;padding:9px 16px;border-radius:999px;background:var(--sun);color:var(--sun-ink);font:700 14px Inter,system-ui,sans-serif;text-decoration:none}
+  .bg{display:grid;place-content:center;gap:4px;width:42px;height:42px;border-radius:14px;border:1px solid var(--line);background:var(--bg);cursor:pointer;padding:0}
+  .bg span{display:block;width:18px;height:2px;border-radius:2px;background:var(--ink);transition:transform .25s,opacity .2s}
+  header.open .bg span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+  header.open .bg span:nth-child(2){opacity:0}
+  header.open .bg span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+  .nw{display:none;order:5;width:100%;flex:none;flex-direction:column;align-items:stretch;gap:10px;padding:8px 0 4px;border-top:1px solid var(--line)}
+  header.open .nw{display:flex;animation:gmIn .2s ease-out}
+  nav{flex-direction:column;align-items:stretch;justify-content:flex-start;gap:2px;width:100%}
+  nav>a,.ng>summary{display:flex;font-size:16px;padding:12px 14px;border-radius:14px}
+  .ng>summary{justify-content:space-between}
+  nav a.nr{display:none}
+  .gm{position:static;min-width:0;padding:2px 0 6px 12px;border:0;box-shadow:none;background:transparent;animation:none}
+  .gm a{font-size:15px;color:var(--mute)}
+  .tools{margin-left:0;padding:6px 2px 4px;justify-content:flex-start}
+}
+
+/* ===== Accueil : l'image du véhicule vient avant le texte ===== */
+.hero{grid-template-columns:.95fr 1.05fr}
+.hero .art-wrap{order:-1}
+.hero .art{transform:rotate(-1.5deg)}
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;padding:12px 0 20px;gap:22px}
+  .hero .art{transform:none}
+  .hero .art img{max-height:300px}
+}
+.tools .tg{white-space:nowrap}
+/* Promotions : cartes plus larges, prix sur une seule ligne */
+#gridPromo{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.promo .old,.promo .new{white-space:nowrap}
+.promo .btns{flex-wrap:wrap}

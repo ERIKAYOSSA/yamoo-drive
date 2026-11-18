@@ -159,6 +159,7 @@ export function initUI(data: Catalog, page: string): UIApi {
   if(pg==="vehicule"){let id=+(new URLSearchParams(location.search).get("id")||0);if(!CARS[id])id=0;S.view=id;S.photo=0;S.car=id}
   document.querySelectorAll(".page").forEach(s=>s.classList.toggle("on",s.id==="p-"+pg));
   document.querySelectorAll("#nav a").forEach(a=>{const on=a.dataset.p===(pg==="vehicule"?"vehicules":pg);on?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current")});
+  document.querySelectorAll("#nav details.ng").forEach(g=>g.classList.toggle("on",!!g.querySelector("[aria-current]")));
   render();if(pg==="vehicule")detail();if(pg==="accueil")countUp();if(pg==="cadeau")resetEnv();enterPage(pg);
  }
  document.addEventListener("click",e=>{
@@ -209,6 +210,13 @@ export function initUI(data: Catalog, page: string): UIApi {
  n.addEventListener("scroll",up,{passive:true});addEventListener("resize",up);addEventListener("load",up);setTimeout(up,300);up();
  $("nR").addEventListener("click",()=>n.scrollBy({left:Math.max(160,n.clientWidth*.6),behavior:"smooth"}));
  $("nL").addEventListener("click",()=>n.scrollBy({left:-Math.max(160,n.clientWidth*.6),behavior:"smooth"}))})();
+ (function(){const hd=document.querySelector("header"),bg=$("bg"),gs=[...document.querySelectorAll("#nav details.ng")],hov=matchMedia("(hover:hover) and (min-width:900px)");
+ const closeG=ex=>gs.forEach(g=>{if(g!==ex)g.open=false});
+ bg.addEventListener("click",()=>{const o=hd.classList.toggle("open");bg.setAttribute("aria-expanded",String(o))});
+ gs.forEach(g=>{g.addEventListener("toggle",()=>{if(g.open)closeG(g)});g.addEventListener("mouseenter",()=>{if(hov.matches)g.open=true});g.addEventListener("mouseleave",()=>{if(hov.matches)g.open=false});g.querySelector("summary").addEventListener("click",e=>{if(hov.matches&&e.detail>0)e.preventDefault()})});
+ document.addEventListener("click",e=>{if(!e.target.closest("#nav details.ng"))closeG(null)});
+ document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeG(null);hd.classList.remove("open");bg.setAttribute("aria-expanded","false")}});
+ $("nav").addEventListener("click",e=>{if(e.target.closest("a"))hd.classList.remove("open")})})();
  restore();route(page);
  return {S,wa,fmt,getInput,getMessage:()=>LAST_MSG,persist};
 }
