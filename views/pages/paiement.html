@@ -1,0 +1,50 @@
+<section class="page on" id="p-paiement">
+  <div class="sec">
+    <h2>Paiement en ligne</h2>
+    <p class="sub">Réglez votre réservation en quelques secondes.</p>
+    <div class="demo-banner" role="note"><b>Mode démonstration :</b> aucun paiement réel n’est effectué et aucune donnée bancaire n’est lue ni enregistrée.</div>
+
+    <div class="paybox" id="payEmpty" hidden>
+      <h3>Aucune réservation à payer</h3>
+      <p class="sub" id="payEmptyText">Commencez par choisir un véhicule.</p>
+      <a class="cta" href="/reserver">Aller à la réservation</a>
+    </div>
+
+    <div class="pay-grid" id="payGrid" hidden>
+      <div class="paybox" id="payMain">
+        <h3>Moyen de paiement</h3>
+        <fieldset class="pm" id="pmList">
+          <legend class="sr">Choisissez un moyen de paiement</legend>
+          <label><input type="radio" name="pm" value="card" checked> Carte bancaire</label>
+          <label><input type="radio" name="pm" value="orange_money"> Orange Money</label>
+          <label><input type="radio" name="pm" value="mtn_momo"> MTN Mobile Money</label>
+          <label><input type="radio" name="pm" value="agency"> Payer à l’agence</label>
+        </fieldset>
+        <div class="pmf" id="pmCard">
+          <label>Numéro de carte<input id="cardNum" inputmode="numeric" autocomplete="off" placeholder="0000 0000 0000 0000" maxlength="19"></label>
+          <div class="two"><label>Expiration<input id="cardExp" autocomplete="off" placeholder="MM/AA" maxlength="5"></label>
+          <label>Code<input id="cardCvc" inputmode="numeric" autocomplete="off" placeholder="000" maxlength="4"></label></div>
+          <p class="note">Démonstration : ces champs ne sont pas transmis. Ne saisissez pas de vrais numéros de carte.</p>
+        </div>
+        <div class="pmf" id="pmMobile" hidden>
+          <label>Numéro Mobile Money à débiter<input id="payPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="6XX XX XX XX"></label>
+          <p class="note">Démonstration : aucune demande de confirmation n’est envoyée sur ce numéro.</p>
+        </div>
+        <div class="pmf" id="pmAgency" hidden><p class="note">Vous réglez à l’agence à la remise du véhicule. Votre réservation est enregistrée et le contrat est disponible.</p></div>
+        <p class="err" id="payHint" role="alert"></p>
+        <button class="cta" id="payGo" type="button">Payer</button>
+      </div>
+      <aside class="sumbox" id="paySummary" aria-live="polite"></aside>
+    </div>
+
+    <div class="okpanel" id="payDone" hidden>
+      <h3 id="payDoneTitle">Merci !</h3>
+      <p id="payDoneText"></p>
+      <div class="btns">
+        <a class="cta" id="dlContract" href="#">Télécharger le contrat (PDF)</a>
+        <a class="cta wa" id="waConfirm" target="_blank" rel="noopener" href="#">Confirmer sur WhatsApp</a>
+        <a class="ghost" href="/">Retour à l’accueil</a>
+      </div>
+    </div>
+  </div>
+</section>

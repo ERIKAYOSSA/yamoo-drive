@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0B1B4D">
+<title>Yamoo Admin</title>
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon.png?v=2">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+<!-- Connexion -->
+<section id="login" class="login" hidden>
+  <form id="loginForm" class="login-card" autocomplete="on">
+    <img class="login-logo" src="/img/logo.webp" alt="Yamoo Drive">
+    <h1>Espace admin</h1>
+    <p class="muted">Connectez-vous pour gérer vos réservations.</p>
+    <label for="pw">Mot de passe</label>
+    <div class="pw">
+      <input id="pw" type="password" name="password" autocomplete="current-password" required placeholder="Votre mot de passe">
+      <button type="button" class="pw-toggle" data-act="toggle-pw" aria-label="Afficher le mot de passe">Afficher</button>
+    </div>
+    <p id="loginErr" class="err" role="alert" hidden></p>
+    <button class="btn primary big" id="loginBtn" type="submit">Se connecter</button>
+  </form>
+</section>
+
+<!-- Application -->
+<div id="app" hidden>
+  <aside class="side">
+    <a class="brand" href="#/accueil"><img src="/img/logo-dark.webp" alt="Yamoo Drive"><span>Admin</span></a>
+    <nav id="sideNav"></nav>
+    <button class="side-out" data-act="logout" type="button"><span data-i="logout"></span>Se déconnecter</button>
+  </aside>
+
+  <header class="topbar">
+    <a class="brand-m" href="#/accueil"><img src="/img/logo.webp" alt="Yamoo Drive"></a>
+    <h1 id="pageTitle">Accueil</h1>
+    <button class="icon-btn" data-act="refresh" type="button" aria-label="Actualiser"><span data-i="refresh"></span></button>
+  </header>
+
+  <main class="main" id="view"></main>
+
+  <nav class="tabbar" id="tabBar" aria-label="Navigation"></nav>
+</div>
+
+<!-- Fiche réservation -->
+<div id="drawer" class="drawer" hidden>
+  <div class="drawer-bg" data-act="close-drawer"></div>
+  <section class="drawer-panel" role="dialog" aria-modal="true" aria-label="Détail de la réservation" id="drawerPanel"></section>
+</div>
+
+<div id="toasts" class="toasts" aria-live="polite"></div>
+
+<script type="module" src="/js/client/admin.js"></script>
+</body>
+</html>

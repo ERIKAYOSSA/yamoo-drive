@@ -1,0 +1,41 @@
+<section class="page on" id="p-reserver">
+  <div class="sec"><h2>Réserver ou offrir</h2><p class="sub">Envoyez votre demande sur WhatsApp, payez en ligne ou téléchargez le contrat de location.</p>
+  <div class="rs">
+    <div class="form">
+      <div><div class="seg" role="group" aria-label="Opération"><button data-mode="rent">Louer</button></div>
+      <div class="seg" role="group" aria-label="Pour qui"><button data-who="me">Pour moi</button><button data-who="other">Pour un proche</button></div></div>
+      <label>Véhicule<select id="selCar"></select></label>
+      <label>Votre nom<input id="cname" autocomplete="name" placeholder="Votre nom complet"></label>
+      <label>Votre téléphone<input id="cphone" type="tel" inputmode="tel" autocomplete="tel" placeholder="6XX XX XX XX"></label>
+      <p class="acc-hint" id="accHint" hidden></p>
+      <div class="form" id="daysBox" hidden>
+        <label>Durée : <span id="daysOut"></span><input type="range" id="days" min="1" max="30" value="3"></label>
+        <label>Date de début<input type="date" id="date"></label>
+        <div class="times"><label>Heure de réception du véhicule<input type="time" id="stime"></label></div>
+        <div class="seg" role="group" aria-label="Chauffeur"><button data-chauf="no">Sans chauffeur</button><button data-chauf="yes">Avec chauffeur (+<span data-fcfa="15000">15 000 FCFA</span> / jour)</button></div>
+        <div id="drvBox" hidden><p style="margin:0 0 8px;font-weight:600">Choisissez votre chauffeur</p><div class="drvs" id="drvPick"></div><a href="/chauffeurs" style="font-weight:600;display:inline-block;margin-top:8px">Lire les avis sur les chauffeurs</a></div></div>
+      <label>Lieu de remise ou de livraison<select id="place"><option value="">Choisissez la ville et le quartier</option><optgroup label="Douala"><option value="Douala – Aéroport international de Douala">Aéroport international de Douala</option><option value="Douala – Akwa">Akwa</option><option value="Douala – Bonanjo">Bonanjo</option><option value="Douala – Bonapriso">Bonapriso</option><option value="Douala – Deïdo">Deïdo</option><option value="Douala – Bali">Bali</option><option value="Douala – New Bell">New Bell</option><option value="Douala – Bépanda">Bépanda</option><option value="Douala – Makepe">Makepe</option><option value="Douala – Bonamoussadi">Bonamoussadi</option><option value="Douala – Logpom">Logpom</option><option value="Douala – Ndokotti">Ndokotti</option><option value="Douala – Bonabéri">Bonabéri</option><option value="Douala – Kotto">Kotto</option><option value="Douala – Logbessou">Logbessou</option><option value="Douala – Cité des Palmiers">Cité des Palmiers</option></optgroup><optgroup label="Yaoundé"><option value="Yaoundé – Aéroport de Yaoundé-Nsimalen">Aéroport de Yaoundé-Nsimalen</option><option value="Yaoundé – Centre-ville">Centre-ville</option><option value="Yaoundé – Bastos">Bastos</option><option value="Yaoundé – Mvan">Mvan</option><option value="Yaoundé – Essos">Essos</option><option value="Yaoundé – Mvog-Mbi">Mvog-Mbi</option><option value="Yaoundé – Melen">Melen</option><option value="Yaoundé – Omnisport">Omnisport</option><option value="Yaoundé – Biyem-Assi">Biyem-Assi</option><option value="Yaoundé – Mendong">Mendong</option><option value="Yaoundé – Nlongkak">Nlongkak</option><option value="Yaoundé – Ngousso">Ngousso</option><option value="Yaoundé – Etoudi">Etoudi</option><option value="Yaoundé – Mimboman">Mimboman</option><option value="Yaoundé – Odza">Odza</option><option value="Yaoundé – Tsinga">Tsinga</option></optgroup></select></label>
+      <label>Repère (facultatif)<input id="landmark" maxlength="120" autocomplete="off" placeholder="Ex : en face de la pharmacie, près de la station…"></label>
+      <div class="geo" id="geoBox">
+        <span class="geo-t">Position exacte (facultatif)</span>
+        <div class="geo-row">
+          <button type="button" class="ghost" id="geoBtn">Partager ma position</button>
+          <label class="geo-l">Ou collez un lien Google Maps<input id="mapLink" type="url" inputmode="url" maxlength="500" autocomplete="off" placeholder="https://maps.app.goo.gl/…"></label>
+        </div>
+        <p class="geo-st" id="geoSt" role="status" hidden></p>
+        <p class="geo-note">Pour un cadeau, demandez à votre proche de vous envoyer sa position sur WhatsApp, puis collez le lien ici. Votre position n’est utilisée que pour cette réservation.</p>
+      </div>
+      <label>Décoration du véhicule<select id="deco"><option value="">Aucune</option><option value="Fleurs de mariage">Fleurs de mariage</option><option value="Grand ruban cadeau">Grand ruban cadeau</option></select></label>
+      <label>Code parrain (facultatif)<input id="pcode" placeholder="YAMOO-AWA10"></label>
+      <div class="form" id="otherBox" hidden>
+        <label>Prénom du bénéficiaire<input id="name" placeholder="Awa" autocomplete="off"></label>
+        <label>Votre message<textarea id="msg" placeholder="Joyeux anniversaire, prends la route !"></textarea></label></div>
+    </div>
+    <aside class="ticket" aria-live="polite">
+      <span class="tag" id="tTag"></span><div class="to" id="tTo"></div><div id="tCar"></div><div class="msg" id="tMsg"></div>
+      <div class="row"><div><div id="tName" style="font-weight:600"></div><div class="price" id="tPrice"></div></div><a class="cta wa" id="go" target="_blank" rel="noopener">Envoyer sur WhatsApp</a></div>
+      <div class="hint" id="hint">Indiquez votre nom pour continuer.</div>
+      <div class="pay-actions"><button class="cta" id="payBtn" type="button">Payer en ligne</button><button class="ghost" id="contractBtn" type="button">Contrat de location (PDF)</button></div>
+    </aside>
+  </div></div>
+</section>

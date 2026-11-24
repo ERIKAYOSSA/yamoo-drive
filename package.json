@@ -1,0 +1,20 @@
+{
+  "name": "yamoo-drive",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site Yamoo Drive : vente et location de véhicules (frontend multi-pages + backend TypeScript)",
+  "type": "module",
+  "engines": { "node": ">=20.11" },
+  "scripts": {
+    "build:server": "tsc -p tsconfig.server.json",
+    "build:client": "tsc -p tsconfig.client.json",
+    "build": "npm run build:server && npm run build:client",
+    "start": "node --env-file=.env dist/server/index.js",
+    "dev": "npm run build && node --env-file=.env --watch dist/server/index.js",
+    "typecheck": "tsc -p tsconfig.server.json --noEmit && tsc -p tsconfig.client.json --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  }
+}

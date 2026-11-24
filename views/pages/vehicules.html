@@ -1,0 +1,8 @@
+<section class="page on" id="p-vehicules">
+  <div class="sec"><h2>Nos véhicules</h2><p class="sub">Choisissez comment afficher les prix, puis touchez un véhicule.</p>
+  <div class="seg" role="group" aria-label="Type de prix"><button data-mode="buy">Prix d’achat</button><button data-mode="rent">Prix par jour</button></div>
+  <div class="calc"><label>Budget de location : <b id="bOut"></b><input type="range" id="budget" min="20000" max="80000" step="5000" value="50000"></label><p id="bRes"></p></div>
+  <div class="seg" role="group" aria-label="Filtre"><button data-flt="all">Tous</button><button data-flt="suv">SUV</button><button data-flt="berline">Berlines</button><button data-flt="fav">Mes favoris</button></div>
+  <div class="seg" role="group" aria-label="Tri"><button data-sort="">Par défaut</button><button data-sort="asc">Prix croissant</button><button data-sort="desc">Prix décroissant</button></div>
+  <div class="grid" id="gridAll"></div></div>
+</section>

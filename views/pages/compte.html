@@ -1,0 +1,77 @@
+<section class="page on" id="p-compte">
+  <div class="sec">
+    <h2>Mon compte</h2>
+    <p class="sub">Facultatif : créez un compte pour retrouver vos réservations. Vous pouvez toujours réserver sans compte.</p>
+    <p id="accLoading" class="sub">Chargement…</p>
+
+    <div id="accGuest" class="acc-wrap" hidden>
+      <div class="seg" role="group" aria-label="Compte">
+        <button type="button" data-acc="login" aria-pressed="true">Se connecter</button>
+        <button type="button" data-acc="register" aria-pressed="false">Créer un compte</button>
+      </div>
+
+      <form id="loginForm" class="form acc-card" novalidate>
+        <label>Votre téléphone<input id="lgPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="6XX XX XX XX"></label>
+        <label>Mot de passe<input id="lgPw" type="password" autocomplete="current-password"></label>
+        <p class="acc-err" id="lgErr" role="alert" hidden></p>
+        <button class="cta" type="submit">Se connecter</button>
+      </form>
+
+      <form id="regForm" class="form acc-card" novalidate hidden>
+        <label>Votre nom<input id="rgName" autocomplete="name" placeholder="Votre nom complet"></label>
+        <label>Votre téléphone<input id="rgPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="6XX XX XX XX"></label>
+        <label>E-mail (facultatif)<input id="rgEmail" type="email" autocomplete="email" placeholder="vous@exemple.com"></label>
+        <label>Mot de passe (8 caractères minimum)<input id="rgPw" type="password" autocomplete="new-password"></label>
+        <p class="acc-note">Votre numéro sert à vous identifier et à vous contacter pour vos réservations. Il n’est jamais partagé.</p>
+        <p class="acc-err" id="rgErr" role="alert" hidden></p>
+        <button class="cta" type="submit">Créer mon compte</button>
+      </form>
+    </div>
+
+    <div id="accUser" class="acc-wrap" hidden>
+      <div class="acc-card acc-head">
+        <div class="acc-av" id="auAv"></div>
+        <div class="acc-id"><h3 id="auName"></h3><p id="auSince"></p></div>
+        <span class="acc-tier" id="auTier"></span>
+      </div>
+
+      <div class="acc-card"><h3>Mes réservations</h3><div id="auRes" class="acc-list"></div></div>
+
+      <div class="acc-card">
+        <h3>Mes informations</h3>
+        <form id="profForm" class="form" novalidate>
+          <label>Votre nom<input id="pfName" autocomplete="name"></label>
+          <label>E-mail (facultatif)<input id="pfEmail" type="email" autocomplete="email"></label>
+          <p class="acc-note" id="pfPhone"></p>
+          <p class="acc-err" id="pfErr" role="alert" hidden></p>
+          <p class="acc-ok" id="pfOk" role="status" hidden></p>
+          <button class="cta" type="submit">Enregistrer</button>
+        </form>
+      </div>
+
+      <div class="acc-card">
+        <h3>Mot de passe</h3>
+        <form id="pwForm" class="form" novalidate>
+          <label>Mot de passe actuel<input id="pwCur" type="password" autocomplete="current-password"></label>
+          <label>Nouveau mot de passe (8 caractères minimum)<input id="pwNew" type="password" autocomplete="new-password"></label>
+          <p class="acc-err" id="pwErr" role="alert" hidden></p>
+          <p class="acc-ok" id="pwOk" role="status" hidden></p>
+          <button class="ghost" type="submit">Changer le mot de passe</button>
+        </form>
+      </div>
+
+      <div class="acc-card">
+        <div class="btns"><button class="ghost" type="button" id="auLogout">Se déconnecter</button></div>
+        <details class="acc-del">
+          <summary>Supprimer mon compte</summary>
+          <form id="delForm" class="form" novalidate>
+            <p class="acc-note">Votre compte sera supprimé. Vos réservations déjà enregistrées restent chez nous, mais ne sont plus liées à un compte.</p>
+            <label>Votre mot de passe<input id="delPw" type="password" autocomplete="current-password"></label>
+            <p class="acc-err" id="delErr" role="alert" hidden></p>
+            <button class="ghost acc-danger" type="submit">Supprimer définitivement</button>
+          </form>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
