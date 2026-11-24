@@ -130,7 +130,7 @@ export function buildContractPdf(r: Reservation, vehicle: Vehicle, driver?: Driv
     if (r.input.recipient) {
       items.push(["Véhicule offert à", r.input.recipient.name]);
       if (r.input.recipient.message) items.push(["Message", r.input.recipient.message]);
-      items.push(["Responsabilité", rent ? "Le Locataire reste responsable du contrat ; le bénéficiaire doit présenter un permis valide s’il conduit." : "L’Acheteur reste responsable de la commande."]);
+      items.push(["Responsabilité", rent ? "Le Client reste responsable du contrat ; le bénéficiaire doit présenter un permis valide s’il conduit." : "L’Acheteur reste responsable de la commande."]);
     }
     if (r.input.decoration) items.push(["Décoration", r.input.decoration]);
     pdf.rows(items);
@@ -170,7 +170,7 @@ export function buildContractPdf(r: Reservation, vehicle: Vehicle, driver?: Driv
   pdf.gap(8);
   const top = pdf.y;
   const w = (pdf.contentWidth - 20) / 2;
-  const labels = [rent ? "Le Loueur" : "Le Vendeur", rent ? "Le Locataire (« lu et approuvé »)" : "L’Acheteur (« lu et approuvé »)"];
+  const labels = [rent ? "Le Loueur" : "Le Vendeur", rent ? "Le Client (« lu et approuvé »)" : "L’Acheteur (« lu et approuvé »)"];
   labels.forEach((label, i) => {
     const x = pdf.margin + i * (w + 20);
     pdf.rect(x, top, w, 90, { stroke: COLORS.line, lineWidth: 0.8 });

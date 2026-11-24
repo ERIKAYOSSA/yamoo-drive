@@ -36,10 +36,7 @@ export function initReserve(ui: UIApi): void {
       showHint("Indiquez l’heure à laquelle vous voulez recevoir le véhicule.", "stime");
       return null;
     }
-    if (strict && input.mode === "rent" && !input.endTime) {
-      showHint("Indiquez l’heure de retour du véhicule.", "etime");
-      return null;
-    }
+    
     hint.classList.remove("on");
     return input;
   }
